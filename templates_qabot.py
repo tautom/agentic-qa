@@ -47,10 +47,7 @@ def qatester_message():
 
         As last step: Handoff for Sending: Pass the information in file  {test_recommendations_file} to the emailer_agent. 
         The Emailer Agent will take care of formatting and sending.
-        
-        Crucial Rules:
-        - You must use the sales agent tools to generate the drafts — do not write them yourself.
-        - You must hand off exactly ONE email to the Email Manager — never more than one.
+     
 
         Crucial Rules:
             You must create new files and directories or write to files only in the specified framework folder {test_dir_path}.
