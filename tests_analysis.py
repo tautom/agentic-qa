@@ -43,6 +43,7 @@ def manage_filesystem(context: RunContextWrapper[Any], action: str, name: str, c
 #Convert agent to tool for subject writer
 subject_writer = Agent(name="Email subject writer", instructions=email_subject_instructions(), model="gpt-4o-mini")
 subject_tool = subject_writer.as_tool(tool_name="subject_writer", tool_description="Write a subject for a cold sales email")
+
 #Convert agent to tool for html formatting
 html_converter = Agent(name="HTML email body converter", instructions=email_html_instructions(), model="gpt-4o-mini")
 html_tool = html_converter.as_tool(tool_name="html_converter",tool_description="Convert a text email body to an HTML email body")
@@ -59,7 +60,7 @@ def send_email(subject: str, html_body: str) -> Dict[str, str]:
     sg.client.mail.send.post(request_body=mail)
     return {"status": "success"}
 
-
+#Create agent to send emails
 email_tools = [subject_tool, html_tool, send_email]
 emailer_agent = Agent(
     name="Email Manager",
