@@ -1,0 +1,106 @@
+Report: Test Coverage and Framework Recommendations for saucedemo.com
+
+Scope reviewed:
+- Application: https://www.saucedemo.com/
+- Existing automation structure in ./demo_tests/tests and ./demo_tests/bugsquasher
+- Requirements: login, browse/add-to-cart, checkout/pay, logout
+
+Recommended end-to-end test coverage
+
+Positive test cases:
+1. Successful login
+- User enters valid credentials (standard_user / secret_sauce)
+- User is redirected to Inventory page
+- Inventory items are visible
+
+2. Browse inventory and add single item to cart
+- Add one product from Inventory page
+- Cart badge increments correctly
+- Item appears in Cart page with correct name/price
+
+3. Add multiple items and verify cart contents
+- Add multiple products from Inventory
+- Cart badge reflects count
+- Cart page lists all added items correctly
+
+4. Remove item from cart
+- Remove item from Inventory or Cart page
+- Cart badge decreases/removes as expected
+- Removed item no longer appears in cart
+
+5. Successful checkout flow
+- Add item(s) to cart
+- Navigate to Cart
+- Proceed to Checkout
+- Fill Checkout: Your Information
+- Continue to Overview
+- Finish purchase
+- Order confirmation message displayed
+
+6. Logout
+- User logs out successfully from Inventory or burger menu
+- User is returned to login screen
+
+Negative test cases:
+1. Login with invalid username/password
+- Validate error message is displayed
+- Validate user remains on login page
+
+2. Login with empty username/password
+- Validate required field error behavior
+
+3. Checkout without cart items
+- Validate checkout button behavior from empty cart
+
+4. Checkout form validation
+- Submit checkout step one with missing first name, last name, or zip code
+- Validate error messages
+
+5. Remove non-existent item / cart empty handling
+- Validate UI state does not break when cart is empty
+
+6. Browser/session persistence after logout
+- Verify user cannot access inventory using back button after logout
+
+7. Restricted actions without authentication
+- Attempt direct access to protected pages without login if supported
+- Validate redirect to login
+
+Recommendations to improve test coverage
+- Add smoke suite covering login, add to cart, checkout, and logout
+- Add regression suite for cart operations and form validation
+- Add negative-path assertions for all required fields in checkout
+- Add verification of item sorting/filtering if supported by the app
+- Add coverage for product detail navigation if present in inventory
+- Add coverage for persistence of cart state across page navigation
+- Add URL and page-title assertions at each major transition
+- Add visual/content assertions for order complete page and confirmation text
+- Add cleanup/reset steps to ensure isolated test runs
+
+Framework recommendations for ./demo_tests/bugsquasher
+- Review and standardize page object model usage for Inventory, Cart, Checkout, and Login pages
+- Centralize locators to reduce duplication and maintenance cost
+- Use reusable fixtures for login, test data, and authenticated state
+- Add explicit waits and avoid fragile timing-based sleeps
+- Improve assertions to validate both UI state and business outcomes
+- Parameterize credentials and test data through config/environment variables
+- Separate smoke, regression, and negative tests into clear modules/tags
+- Add screenshots/video attachments on failure for faster debugging
+- Ensure tests are independent and can run in any order
+- Add retry only where appropriate; do not mask real defects
+- Improve logging to include step context and current page information
+- Add CI-friendly reporting (JUnit/HTML) for visibility
+
+Observed gaps to look for in existing tests
+- Missing validation of checkout form errors
+- Missing coverage for empty cart and logout edge cases
+- Missing assertions on cart badge count and order complete confirmation
+- Missing negative login scenarios
+- Missing maintenance patterns such as reusable helpers and page objects
+
+Prioritized recommendations
+1. Stabilize login and checkout happy paths first
+2. Add core negative validations for login and checkout forms
+3. Expand cart operation coverage for add/remove/multi-item behavior
+4. Refactor framework for maintainability and consistent reporting
+5. Add assertions around navigation, URLs, and post-logout access control
