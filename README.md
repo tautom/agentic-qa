@@ -106,7 +106,7 @@ uv run tests_analysis.py
 
 Potential future improvements include:
 
-* Automated tests generation
+* RAG
 * MCP servers to connect to tools like Jira, Asana etc to read and review specs/requirements. 
 
 
