@@ -14,7 +14,7 @@ from templates_qabot import *
 
 load_dotenv(override=True)
 
-# Define the custom tool to create directories and files under a specific dir path. 
+# Custom tool to create directories and files under a specific dir path. 
 @function_tool
 def manage_filesystem(context: RunContextWrapper[Any], action: str, name: str, content: str = ""):
     """
@@ -48,7 +48,7 @@ subject_tool = subject_writer.as_tool(tool_name="subject_writer", tool_descripti
 html_converter = Agent(name="HTML email body converter", instructions=email_html_instructions(), model="gpt-4o-mini")
 html_tool = html_converter.as_tool(tool_name="html_converter",tool_description="Convert a text email body to an HTML email body")
 
-#Create send email Tool
+#Send email Tool
 @function_tool
 def send_email(subject: str, html_body: str) -> Dict[str, str]:
     """ Send out an email with the given subject and HTML body """
